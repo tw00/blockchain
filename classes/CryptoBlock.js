@@ -1,25 +1,24 @@
-import SHA256 from "./HashNode";
+import SHA256 from "../lib/node/hash";
 
 class CryptoBlock {
-  constructor(index, timestamp, data, precedingHash = "") {
-    this.index = index;
+  constructor(timestamp, transactions, previousHash = "") {
     this.timestamp = timestamp;
-    this.data = data;
-    this.precedingHash = precedingHash;
+    this.transactions = transactions;
+    this.previousHash = previousHash;
     this.hash = this.computeHash();
     this.nonce = 0;
   }
 
   computeHash() {
     return SHA256(
-      this.index +
-        this.precedingHash +
+      this.previousHash +
         this.timestamp +
-        JSON.stringify(this.data) +
+        JSON.stringify(this.transactions) +
         this.nonce
     ).toString();
   }
 
+  // = mineBlock
   proofOfWork(difficulty) {
     while (
       this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")

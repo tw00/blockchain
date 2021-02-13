@@ -1,26 +1,29 @@
-import CryptoBlock from "./classes/CryptoBlock";
 import BlockChain from "./classes/BlockChain";
+import Transaction from "./classes/Transaction";
 
-console.log("CryptoBlock", CryptoBlock);
+console.clear();
+console.log("🪙🚀 econicoin - to the moon");
+console.log("---------------------------");
 
 let econicoin = new BlockChain();
 
-econicoin.addNewBlock(
-  new CryptoBlock(1, "02/11/2020", {
-    sender: "Alex",
-    recipient: "Thomas",
-    quantity: 500,
-  })
+econicoin.addTransaction(new Transaction("Alex", "Thomas", 500));
+econicoin.addTransaction(new Transaction("Thomas", "Skyler", 100));
+console.log("💸 Making transactions");
+econicoin.pendingTransactions.forEach((t) =>
+  console.log(`  - ${t.fromAddress} ➟ ${t.toAddress}: Ĕ ${t.amount}`)
 );
 
-econicoin.addNewBlock(
-  new CryptoBlock(2, "02/12/2020", {
-    sender: "Thomas",
-    recipient: "Skyler",
-    quantity: 100,
-  })
-);
+console.log("⛏️ Starting mining...");
+econicoin.minePendingTransactions("Thomas");
 
-console.log(JSON.stringify(econicoin, null, 4));
-const valid = econicoin.checkChainValidity();
-console.log("valid", valid);
+console.log("⛏️ Starting mining...");
+econicoin.minePendingTransactions("Thomas");
+
+console.log("💰 Thomas' Balance: Ĕ", econicoin.getBalanceOfAddress("Thomas"));
+console.log("💰 Alex' Balance:   Ĕ", econicoin.getBalanceOfAddress("Alex"));
+
+const valid = econicoin.isBlockchainValid();
+console.log("💔 is chain valid?", valid);
+
+console.log("BLOCKCHAIN", JSON.stringify(econicoin.blockchain, null, 2));
