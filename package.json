@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "airswarm": "^1.1.0",
-    "esm": "^3.2.25"
+    "elliptic": "^6.5.4",
+    "esm": "^3.2.25",
+    "hyperswarm": "^2.15.3"
   }
 }
